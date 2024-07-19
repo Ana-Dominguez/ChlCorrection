@@ -43,7 +43,9 @@ def spacetime_distance(lat, lon, time, matched):
     time_diffs = [abs(time_dt - time) for time in matched['sat_time']]
     which_time_diffs = [i for i,v in enumerate(time_diffs) if 
                         v == min(time_diffs)]
+    min_time_diff = min(time_diffs)
     closest = matched.loc[which_time_diffs]
+    closest = closest.assign(time_diff = pd.Series([min_time_diff] * closest.shape[0]))
 
     # DISTANCE FILTER
     # Calculate spatial distances
@@ -60,7 +62,7 @@ def spacetime_distance(lat, lon, time, matched):
     # Filter to closest cell
     closest = closest.loc[closest['spatial_dist'] == min(dists)]
 
-    if matched.shape[0] > 1:
+    if closest.shape[0] > 1:
         print('ERROR: Multiple rows, only one allowed. Number of rows: ' +
               str(len(closest)))
         print(closest)

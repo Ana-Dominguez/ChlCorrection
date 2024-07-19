@@ -7,7 +7,7 @@ import pandas as pd
 from urllib.parse import quote
 
 def get_glider():
-    glider = pd.read_csv('line80-satellitequery.csv')
+    glider = pd.read_csv('/Users/anamd/Downloads/Desktop/Anaconda/NOAACoastWatch/ChlCorrection/matchup_code/line80-satellitequery.csv')
     glider = glider.drop(index = 0)
     #select only surface depths (10m)
     glider = glider[glider.get('depth') == '10.0']
